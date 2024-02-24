@@ -1,0 +1,14 @@
+html, body { height: 100%; }
+
+body{
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow-y: auto;
+    background: linear-gradient(356deg, #161427, rgb(114 132 145 / 87%));
+}
+
+.mat-button.mat-accent,
+.mat-icon-button.mat-accent,
+.mat-strocked-button.mat-accent{
+    color: #00e676;
+}

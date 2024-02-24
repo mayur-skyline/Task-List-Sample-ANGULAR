@@ -1,0 +1,113 @@
+<div class="row" style="display: flex;">
+  <div class="col-md-3">
+    <div style="margin: 10px;">
+      <mat-card class="mt-3">
+        <form [formGroup]="todoForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>brush</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input formControlName="description" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>insert_comment</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Assigned By</mat-label>
+            <input formControlName="assignby" matInput placeholder="Placeholder">
+            <mat-icon matSuffix>record_voice_over</mat-icon>
+          </mat-form-field>
+          <button *ngIf="!isEditEnabled" (click)="addTask()" mat-raised-button [disabled]="todoForm.invalid"
+            color="primary">ADD TASK</button>
+          <button *ngIf="isEditEnabled" (click)="updateTask()" mat-raised-button [disabled]="todoForm.invalid"
+            color="primary">UPDATE TASK</button>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div cdkDropListGroup>
+      <div class="row" style="display: flex; margin-top: 10px;">
+        <div class="col-md-4">
+          <div class="todoList">
+            <h2 class="head-title">TO DO <span *ngIf="tasks.length > 0">- {{tasks.length}}</span></h2>
+            <mat-accordion cdkDropList #todoList="cdkDropList" [cdkDropListData]="tasks" class="todoAccordian"
+              (cdkDropListDropped)="drop($event)">
+              <mat-expansion-panel *ngFor="let item of tasks; let i = index;" cdkDrag>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    TITLE : {{item.title}}
+                  </mat-panel-title>
+                  <div class="box">
+                    <button mat-icon-button (click)="deleteTask(i)" color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="OnEdit(item, i)" color="primary">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                </mat-expansion-panel-header>
+                <p>DESCRIPTION : {{item.description}}</p>
+                <div class="box">
+                  <p>ASSIGNED BY : {{item.assignby}}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="todoList">
+            <h2 class="head-title">IN PROGRESS <span *ngIf="inprogress.length > 0">- {{inprogress.length}}</span></h2>
+            <mat-accordion cdkDropList #todoList="cdkDropList" [cdkDropListData]="inprogress" class="todoAccordian"
+              (cdkDropListDropped)="drop($event)">
+              <mat-expansion-panel *ngFor="let item of inprogress; let i = index;" cdkDrag>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    TITLE : {{item.title}}
+                  </mat-panel-title>
+                  <div class="box">
+                    <button mat-icon-button (click)="deleteInProgressTask(i)" color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </mat-expansion-panel-header>
+                <p>DESCRIPTION : {{item.description}}</p>
+                <div class="box">
+                  <p>ASSIGNED BY : {{item.assignby}}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="todoList">
+            <h2 class="head-title">DONE <span *ngIf="done.length > 0">- {{done.length}}</span></h2>
+            <mat-accordion cdkDropList #todoList="cdkDropList" [cdkDropListData]="done" class="todoAccordian"
+              (cdkDropListDropped)="drop($event)">
+              <mat-expansion-panel *ngFor="let item of done; let i = index;" cdkDrag>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    TITLE : {{item.title}}
+                  </mat-panel-title>
+                  <div class="box">
+                    <button mat-icon-button (click)="deleteDoneTask(i)" color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent">
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                  </div>
+                </mat-expansion-panel-header>
+                <p>DESCRIPTION : {{item.description}}</p>
+                <div class="box">
+                  <p>ASSIGNED BY : {{item.assignby}}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
